@@ -1,7 +1,9 @@
+
 import { ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { TableToolbar } from "./TableToolbar";
 import { TablePagination } from "./TablePagination";
@@ -82,8 +84,46 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
     );
   };
 
-  const formatCellValue = (value: any) => {
+  const isImageField = (key: string, value: any) => {
+    const imageKeys = ['avatar', 'photo', 'picture', 'image', 'profilePicture', 'profile_picture'];
+    const isImageKey = imageKeys.some(imageKey => 
+      key.toLowerCase().includes(imageKey.toLowerCase())
+    );
+    
+    if (isImageKey && typeof value === 'string') {
+      return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(value) || 
+             value.startsWith('http') || 
+             value.startsWith('data:image');
+    }
+    
+    return false;
+  };
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const formatCellValue = (value: any, columnKey: string, rowData: any) => {
     if (value === null || value === undefined) return '-';
+    
+    // Check if this is an image field
+    if (isImageField(columnKey, value)) {
+      const nameField = rowData.name || rowData.username || rowData.title || `User ${rowData.id || ''}`;
+      return (
+        <Avatar className="h-8 w-8">
+          <AvatarImage src={value} alt={nameField} />
+          <AvatarFallback className="text-xs">
+            {nameField ? getInitials(nameField) : '??'}
+          </AvatarFallback>
+        </Avatar>
+      );
+    }
+    
     if (typeof value === 'object') return JSON.stringify(value);
     if (typeof value === 'boolean') return value ? 'Yes' : 'No';
     return String(value);
@@ -141,7 +181,7 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
                 <TableRow key={index} className="hover:bg-muted/50">
                   {visibleColumns.map((column) => (
                     <TableCell key={column.key} className="whitespace-nowrap">
-                      {formatCellValue(row[column.key])}
+                      {formatCellValue(row[column.key], column.key, row)}
                     </TableCell>
                   ))}
                 </TableRow>
