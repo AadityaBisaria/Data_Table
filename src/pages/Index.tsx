@@ -6,7 +6,9 @@ import { ApiConfig } from "@/components/ApiConfig";
 import { DEFAULT_API_URL } from "@/lib/api";
 
 const Index = () => {
+  console.log("Index component loading...");
   const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL);
+  console.log("Index component rendered with apiUrl:", apiUrl);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">

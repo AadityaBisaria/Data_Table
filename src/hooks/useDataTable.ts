@@ -19,6 +19,7 @@ export interface FilterConfig {
 }
 
 export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
+  console.log("useDataTable hook called with apiUrl:", apiUrl);
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
