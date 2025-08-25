@@ -14,7 +14,7 @@ export const DEFAULT_API_URL = "https://jsonplaceholder.typicode.com/users";
 // Configuration for different API endpoints
 export const API_ENDPOINTS = {
   demo: "https://jsonplaceholder.typicode.com/users",
-  fastapi: process.env.VITE_API_URL || "http://localhost:8000/api/data", // Configure this for FastAPI
+  fastapi: import.meta.env.VITE_API_URL || "http://localhost:8000/api/data", // Configure this for FastAPI
 } as const;
 
 export type ApiEndpoint = keyof typeof API_ENDPOINTS;
