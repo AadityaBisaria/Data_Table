@@ -30,7 +30,8 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
     handleSort,
     updateFilter,
     clearFilters,
-    setCurrentPage
+    setCurrentPage,
+    updateItemsPerPage
   } = useDataTable(apiUrl);
 
   if (loading) {
@@ -198,6 +199,7 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
           totalItems={totalItems}
           itemsPerPage={itemsPerPage}
           onPageChange={setCurrentPage}
+          onItemsPerPageChange={updateItemsPerPage}
         />
       )}
     </div>

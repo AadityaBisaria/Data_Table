@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { 
   Pagination, 
   PaginationContent, 
@@ -15,6 +16,7 @@ interface TablePaginationProps {
   totalItems: number;
   itemsPerPage: number;
   onPageChange: (page: number) => void;
+  onItemsPerPageChange: (itemsPerPage: number) => void;
 }
 
 export function TablePagination({
@@ -22,7 +24,8 @@ export function TablePagination({
   totalPages,
   totalItems,
   itemsPerPage,
-  onPageChange
+  onPageChange,
+  onItemsPerPageChange
 }: TablePaginationProps) {
   const startItem = (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
@@ -68,11 +71,32 @@ export function TablePagination({
     return pages;
   };
 
+  const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (value > 0 && value <= totalItems) {
+      onItemsPerPageChange(value);
+    }
+  };
+
   return (
     <div className="flex items-center justify-between px-4 py-3 border-t">
-      {/* Items info */}
+      {/* Items info with editable entries per page */}
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <span>Showing</span>
+        <Input
+          type="number"
+          min="1"
+          max={totalItems}
+          value={itemsPerPage}
+          onChange={handleItemsPerPageChange}
+          className="w-16 h-7 text-center text-sm"
+        />
+        <span>of {totalItems} results</span>
+      </div>
+
+      {/* Page indicator */}
       <div className="text-sm text-muted-foreground">
-        Showing {startItem} to {endItem} of {totalItems} results
+        Page {currentPage} of {totalPages}
       </div>
 
       {/* Pagination controls */}

@@ -27,7 +27,7 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
   
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   
   // Sorting
   const [sortConfig, setSortConfig] = useState<SortConfig[]>([]);
@@ -181,6 +181,11 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
     setCurrentPage(1);
   };
 
+  const updateItemsPerPage = (newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1); // Reset to first page when changing items per page
+  };
+
   return {
     data: paginatedData,
     allData: data,
@@ -197,6 +202,7 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
     handleSort,
     updateFilter,
     clearFilters,
-    setCurrentPage
+    setCurrentPage,
+    updateItemsPerPage
   };
 }
