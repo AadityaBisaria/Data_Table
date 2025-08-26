@@ -16,7 +16,6 @@ interface TablePaginationProps {
   totalItems: number;
   itemsPerPage: number;
   onPageChange: (page: number) => void;
-  onItemsPerPageChange: (itemsPerPage: number) => void;
 }
 
 export function TablePagination({
@@ -24,8 +23,7 @@ export function TablePagination({
   totalPages,
   totalItems,
   itemsPerPage,
-  onPageChange,
-  onItemsPerPageChange
+  onPageChange
 }: TablePaginationProps) {
   const startItem = (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
@@ -71,36 +69,9 @@ export function TablePagination({
     return pages;
   };
 
-  const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0 && value <= totalItems) {
-      onItemsPerPageChange(value);
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.currentTarget.blur();
-    }
-  };
 
   return (
     <div className="flex items-center justify-between px-4 py-3 border-t">
-      {/* Items info with editable entries per page */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <span>Showing</span>
-        <Input
-          type="number"
-          min="1"
-          max={totalItems}
-          value={itemsPerPage}
-          onChange={handleItemsPerPageChange}
-          onKeyDown={handleKeyDown}
-          className="w-16 h-7 text-center text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        />
-        <span>of {totalItems} results</span>
-      </div>
-
       {/* Page indicator */}
       <div className="text-sm text-muted-foreground">
         Page {currentPage} of {totalPages}

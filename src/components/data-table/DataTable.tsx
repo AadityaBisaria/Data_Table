@@ -140,6 +140,8 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
         onClearFilters={clearFilters}
         totalItems={totalItems}
         filteredItems={filteredItemsCount}
+        itemsPerPage={itemsPerPage}
+        onItemsPerPageChange={updateItemsPerPage}
       />
 
       <div className="overflow-auto">
@@ -198,7 +200,6 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
         totalItems={totalItems}
         itemsPerPage={itemsPerPage}
         onPageChange={setCurrentPage}
-        onItemsPerPageChange={updateItemsPerPage}
       />
     </div>
   );

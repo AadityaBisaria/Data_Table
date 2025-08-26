@@ -15,6 +15,8 @@ interface TableToolbarProps {
   onClearFilters: () => void;
   totalItems: number;
   filteredItems: number;
+  itemsPerPage: number;
+  onItemsPerPageChange: (itemsPerPage: number) => void;
 }
 
 export function TableToolbar({
@@ -24,11 +26,26 @@ export function TableToolbar({
   onUpdateFilter,
   onClearFilters,
   totalItems,
-  filteredItems
+  filteredItems,
+  itemsPerPage,
+  onItemsPerPageChange
 }: TableToolbarProps) {
   const visibleColumns = columns.filter(col => col.visible);
   const activeFilters = Object.entries(filters.columnFilters).filter(([_, value]) => value);
   const hasActiveFilters = filters.searchTerm || activeFilters.length > 0;
+
+  const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0 && value <= totalItems) {
+      onItemsPerPageChange(value);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.currentTarget.blur();
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4 p-4 border-b bg-muted/5">
@@ -152,6 +169,20 @@ export function TableToolbar({
         </div>
       )}
 
+      {/* Results info with editable entries per page */}
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <span>Showing</span>
+        <Input
+          type="number"
+          min="1"
+          max={totalItems}
+          value={itemsPerPage}
+          onChange={handleItemsPerPageChange}
+          onKeyDown={handleKeyDown}
+          className="w-16 h-7 text-center text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        />
+        <span>of {totalItems} results</span>
+      </div>
     </div>
   );
 }
