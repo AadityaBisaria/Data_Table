@@ -192,16 +192,14 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
         </Table>
       </div>
 
-      {totalPages > 1 && (
-        <TablePagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalItems={totalItems}
-          itemsPerPage={itemsPerPage}
-          onPageChange={setCurrentPage}
-          onItemsPerPageChange={updateItemsPerPage}
-        />
-      )}
+      <TablePagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
+        onItemsPerPageChange={updateItemsPerPage}
+      />
     </div>
   );
 }
