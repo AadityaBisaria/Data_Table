@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Query, Depends
 from typing import List, Optional, Dict, Any
 import json
 from pathlib import Path
+from datetime import datetime
 
 from ..models import (
     User, FlexibleDataResponse, ColumnSelection, DataRequest
@@ -77,7 +78,7 @@ async def get_flexible_data(
             )
         ]
 
-    # Apply column-specific filters (exact for id, substring for others)
+    # Apply column-specific filters (supports operators and ranges)
     if filters:
         def get_nested_value(obj: Dict[str, Any], path: str):
             try:
@@ -91,38 +92,145 @@ async def get_flexible_data(
             except Exception:
                 return None
 
-        filter_pairs = [pair.strip() for pair in filters.split(',') if pair.strip()]
-        parsed_filters: Dict[str, str] = {}
-        for pair in filter_pairs:
-            if ':' in pair:
-                key, val = pair.split(':', 1)
-                parsed_filters[key.strip()] = val.strip()
+        def parse_iso_date(s: str) -> Optional[datetime]:
+            try:
+                # Support 'Z' suffix (UTC)
+                if s.endswith('Z'):
+                    s = s[:-1] + '+00:00'
+                return datetime.fromisoformat(s)
+            except Exception:
+                return None
 
-        if parsed_filters:
+        def coerce(s: str):
+            # Try int/float
+            try:
+                if '.' in s:
+                    return float(s)
+                return int(s)
+            except Exception:
+                pass
+            # Try ISO datetime
+            dt = parse_iso_date(s)
+            if dt is not None:
+                return dt
+            # Fallback to string (case-insensitive compare later)
+            return s
+
+        def compare(a, b, op: str) -> bool:
+            # Normalize types: if both numeric/date -> compare; else compare as strings
+            if isinstance(a, (int, float, datetime)) and isinstance(b, (int, float, datetime)):
+                if op == '>':  return a > b
+                if op == '>=': return a >= b
+                if op == '<':  return a < b
+                if op == '<=': return a <= b
+                if op in ('==', '='): return a == b
+                if op == '!=': return a != b
+                return False
+            # String comparisons
+            a_s, b_s = str(a).lower(), str(b).lower()
+            if op in ('==', '='):   return a_s == b_s
+            if op == '!=':          return a_s != b_s
+            # For non-equality with strings, default to substring semantics
+            # Treat '>' '<' etc. as substring check not applicable; return False
+            return False
+
+        # Parse filters string into list of constraints
+        # Syntax supported:
+        #   key:value         -> substring (strings) or equality (numbers/dates)
+        #   key:==value       -> equality
+        #   key:!=value       -> inequality
+        #   key:>value, >=, <, <=
+        #   key:a..b          -> inclusive range (numbers/dates)
+        filter_pairs = [pair.strip() for pair in filters.split(',') if pair.strip()]
+
+        constraints: List[Dict[str, Any]] = []
+        for pair in filter_pairs:
+            if ':' not in pair:
+                continue
+            key, raw = pair.split(':', 1)
+            key = key.strip()
+            raw = raw.strip()
+
+            # Range "a..b"
+            if '..' in raw:
+                left, right = raw.split('..', 1)
+                left, right = left.strip(), right.strip()
+                left_v, right_v = coerce(left), coerce(right)
+                constraints.append({'key': key, 'type': 'range', 'low': left_v, 'high': right_v})
+                continue
+
+            # Operators
+            for op in ('>=', '<=', '!=', '>', '<', '==', '='):
+                if raw.startswith(op):
+                    value = raw[len(op):].strip()
+                    constraints.append({'key': key, 'type': 'op', 'op': op, 'value': coerce(value)})
+                    break
+            else:
+                # Default: substring/equality
+                constraints.append({'key': key, 'type': 'default', 'value': coerce(raw)})
+
+        if constraints:
             new_filtered = []
             for user in filtered_data:
                 flat = flatten_user_data(user)
+
                 ok = True
-                for key, val in parsed_filters.items():
-                    if key == 'id':
+                for c in constraints:
+                    # Resolve value via nested key (a.b) or flat key
+                    if '.' in c['key']:
+                        target = get_nested_value(user, c['key'])
+                    else:
+                        target = flat.get(c['key'])
+
+                    # Special-case id as numeric if possible for convenience
+                    if c['key'] == 'id' and target is not None:
                         try:
-                            if int(user.get('id', -1)) != int(val):
+                            target = int(target)
+                        except Exception:
+                            pass
+
+                    if c['type'] == 'range':
+                        low, high = c['low'], c['high']
+                        # If target is string, try to coerce similarly
+                        t = target if not isinstance(target, str) else coerce(target)
+                        # Only compare if types are comparable
+                        if isinstance(t, (int, float, datetime)) and isinstance(low, type(t)) and isinstance(high, type(t)):
+                            if not (low <= t <= high):
                                 ok = False
                                 break
-                        except ValueError:
-                            ok = False
-                            break
-                    else:
-                        target = None
-                        if '.' in key:
-                            target = get_nested_value(user, key)
                         else:
-                            target = flat.get(key)
-                        if target is None or str(val).lower() not in str(target).lower():
                             ok = False
                             break
+
+                    elif c['type'] == 'op':
+                        t = target if not isinstance(target, str) else coerce(target)
+                        # If coercion yields different types, comparison may fail; compare strings if needed
+                        if isinstance(t, (int, float, datetime)) and isinstance(c['value'], (int, float, datetime)):
+                            if not compare(t, c['value'], c['op']):
+                                ok = False
+                                break
+                        else:
+                            if not compare(str(target or ''), str(c['value']), c['op']):
+                                ok = False
+                                break
+
+                    else:  # default
+                        v = c['value']
+                        if isinstance(v, (int, float, datetime)):
+                            # equality for non-strings
+                            t = target if not isinstance(target, str) else coerce(target)
+                            if t != v:
+                                ok = False
+                                break
+                        else:
+                            # substring match for strings
+                            if target is None or str(v).lower() not in str(target).lower():
+                                ok = False
+                                break
+
                 if ok:
                     new_filtered.append(user)
+
             filtered_data = new_filtered
     
     # Apply sorting
