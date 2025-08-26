@@ -1,0 +1,1153 @@
+[
+    {
+      "id": 1,
+      "name": "John Smith",
+      "username": "johnsmith",
+      "email": "john.smith@email.com",
+      "address": {
+        "street": "Main Street",
+        "suite": "Apt. 101",
+        "city": "New York",
+        "zipcode": "10001",
+        "geo": {
+          "lat": "40.7128",
+          "lng": "-74.0060"
+        }
+      },
+      "phone": "1-555-123-4567 x1001",
+      "website": "johnsmith.dev",
+      "company": {
+        "name": "Tech Solutions Inc",
+        "catchPhrase": "Innovative technology solutions",
+        "bs": "revolutionize digital experiences"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Sarah Johnson",
+      "username": "sarahj",
+      "email": "sarah.johnson@email.com",
+      "address": {
+        "street": "Oak Avenue",
+        "suite": "Suite 205",
+        "city": "Los Angeles",
+        "zipcode": "90210",
+        "geo": {
+          "lat": "34.0522",
+          "lng": "-118.2437"
+        }
+      },
+      "phone": "1-555-234-5678 x2002",
+      "website": "sarahjohnson.com",
+      "company": {
+        "name": "Creative Designs LLC",
+        "catchPhrase": "Design with purpose",
+        "bs": "transform visual communications"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Michael Brown",
+      "username": "mikebrown",
+      "email": "michael.brown@email.com",
+      "address": {
+        "street": "Pine Road",
+        "suite": "Unit 42",
+        "city": "Chicago",
+        "zipcode": "60601",
+        "geo": {
+          "lat": "41.8781",
+          "lng": "-87.6298"
+        }
+      },
+      "phone": "1-555-345-6789 x3003",
+      "website": "mikebrown.io",
+      "company": {
+        "name": "Data Analytics Corp",
+        "catchPhrase": "Data-driven insights",
+        "bs": "optimize business intelligence"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Emily Davis",
+      "username": "emilyd",
+      "email": "emily.davis@email.com",
+      "address": {
+        "street": "Maple Lane",
+        "suite": "Building 5",
+        "city": "Houston",
+        "zipcode": "77002",
+        "geo": {
+          "lat": "29.7604",
+          "lng": "-95.3698"
+        }
+      },
+      "phone": "1-555-456-7890 x4004",
+      "website": "emilydavis.net",
+      "company": {
+        "name": "Global Marketing Solutions",
+        "catchPhrase": "Connecting brands with people",
+        "bs": "engage target audiences"
+      }
+    },
+    {
+      "id": 5,
+      "name": "David Wilson",
+      "username": "davidw",
+      "email": "david.wilson@email.com",
+      "address": {
+        "street": "Cedar Street",
+        "suite": "Apt. 3B",
+        "city": "Phoenix",
+        "zipcode": "85004",
+        "geo": {
+          "lat": "33.4484",
+          "lng": "-112.0740"
+        }
+      },
+      "phone": "1-555-567-8901 x5005",
+      "website": "davidwilson.org",
+      "company": {
+        "name": "Eco-Friendly Products Inc",
+        "catchPhrase": "Sustainable solutions for a better world",
+        "bs": "foster green initiatives"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Jessica Lee",
+      "username": "jessical",
+      "email": "jessica.lee@email.com",
+      "address": {
+        "street": "Birch Boulevard",
+        "suite": "Suite 11",
+        "city": "Philadelphia",
+        "zipcode": "19107",
+        "geo": {
+          "lat": "39.9526",
+          "lng": "-75.1652"
+        }
+      },
+      "phone": "1-555-678-9012 x6006",
+      "website": "jessicalee.co",
+      "company": {
+        "name": "Health & Wellness Group",
+        "catchPhrase": "Wellness for everyone",
+        "bs": "empower healthy lifestyles"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Daniel Taylor",
+      "username": "danielt",
+      "email": "daniel.taylor@email.com",
+      "address": {
+        "street": "Pineapple Avenue",
+        "suite": "Unit 7A",
+        "city": "San Antonio",
+        "zipcode": "78205",
+        "geo": {
+          "lat": "29.4241",
+          "lng": "-98.4936"
+        }
+      },
+      "phone": "1-555-789-0123 x7007",
+      "website": "danieltaylor.info",
+      "company": {
+        "name": "Foodie Delights Co.",
+        "catchPhrase": "Taste the difference",
+        "bs": "curate culinary experiences"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Amanda White",
+      "username": "amandaw",
+      "email": "amanda.white@email.com",
+      "address": {
+        "street": "Spruce Street",
+        "suite": "Floor 9",
+        "city": "San Diego",
+        "zipcode": "92101",
+        "geo": {
+          "lat": "32.7157",
+          "lng": "-117.1611"
+        }
+      },
+      "phone": "1-555-890-1234 x8008",
+      "website": "amandawhite.dev",
+      "company": {
+        "name": "Cyber Security Solutions",
+        "catchPhrase": "Protecting your digital assets",
+        "bs": "secure digital infrastructure"
+      }
+    },
+    {
+      "id": 9,
+      "name": "James Rodriguez",
+      "username": "jamesr",
+      "email": "james.rodriguez@email.com",
+      "address": {
+        "street": "Elm Street",
+        "suite": "Apt. 20",
+        "city": "Dallas",
+        "zipcode": "75201",
+        "geo": {
+          "lat": "32.7767",
+          "lng": "-96.7970"
+        }
+      },
+      "phone": "1-555-901-2345 x9009",
+      "website": "jamesrodriguez.org",
+      "company": {
+        "name": "Financial Advisors Group",
+        "catchPhrase": "Building your future",
+        "bs": "strategize financial growth"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Olivia Martinez",
+      "username": "oliviam",
+      "email": "olivia.martinez@email.com",
+      "address": {
+        "street": "Cherry Lane",
+        "suite": "Unit 12",
+        "city": "San Jose",
+        "zipcode": "95113",
+        "geo": {
+          "lat": "37.3382",
+          "lng": "-121.8863"
+        }
+      },
+      "phone": "1-555-012-3456 x1010",
+      "website": "oliviamartinez.com",
+      "company": {
+        "name": "Real Estate Partners",
+        "catchPhrase": "Your dream home is waiting",
+        "bs": "facilitate property transactions"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Liam Miller",
+      "username": "liamm",
+      "email": "liam.miller@email.com",
+      "address": {
+        "street": "Willow Road",
+        "suite": "Apt. 5A",
+        "city": "Jacksonville",
+        "zipcode": "32202",
+        "geo": {
+          "lat": "30.3322",
+          "lng": "-81.6557"
+        }
+      },
+      "phone": "1-555-123-4567 x1111",
+      "website": "liammiller.net",
+      "company": {
+        "name": "Logistics & Transport Co.",
+        "catchPhrase": "Moving the world forward",
+        "bs": "optimize supply chains"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Sophia Garcia",
+      "username": "sophiag",
+      "email": "sophia.garcia@email.com",
+      "address": {
+        "street": "Palm Street",
+        "suite": "Suite 300",
+        "city": "Indianapolis",
+        "zipcode": "46204",
+        "geo": {
+          "lat": "39.7684",
+          "lng": "-86.1581"
+        }
+      },
+      "phone": "1-555-234-5678 x1212",
+      "website": "sophiagarcia.com",
+      "company": {
+        "name": "Event Planning Pros",
+        "catchPhrase": "Making memories happen",
+        "bs": "coordinate special occasions"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Jacob Rodriguez",
+      "username": "jacobr",
+      "email": "jacob.rodriguez@email.com",
+      "address": {
+        "street": "Cypress Drive",
+        "suite": "Unit 22",
+        "city": "Austin",
+        "zipcode": "78701",
+        "geo": {
+          "lat": "30.2672",
+          "lng": "-97.7431"
+        }
+      },
+      "phone": "1-555-345-6789 x1313",
+      "website": "jacobrodriguez.io",
+      "company": {
+        "name": "Software Development House",
+        "catchPhrase": "Coding the future",
+        "bs": "architect digital solutions"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Isabella Clark",
+      "username": "isabellac",
+      "email": "isabella.clark@email.com",
+      "address": {
+        "street": "Magnolia Street",
+        "suite": "Apt. 4C",
+        "city": "Fort Worth",
+        "zipcode": "76102",
+        "geo": {
+          "lat": "32.7555",
+          "lng": "-97.3305"
+        }
+      },
+      "phone": "1-555-456-7890 x1414",
+      "website": "isabellaclark.net",
+      "company": {
+        "name": "Travel & Tourism Agency",
+        "catchPhrase": "Explore the world",
+        "bs": "facilitate global adventures"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Mason Harris",
+      "username": "masonh",
+      "email": "mason.harris@email.com",
+      "address": {
+        "street": "Pine Lane",
+        "suite": "Suite 150",
+        "city": "Columbus",
+        "zipcode": "43215",
+        "geo": {
+          "lat": "39.9612",
+          "lng": "-82.9988"
+        }
+      },
+      "phone": "1-555-567-8901 x1515",
+      "website": "masonharris.com",
+      "company": {
+        "name": "Educational Resources Co.",
+        "catchPhrase": "Learning for life",
+        "bs": "empower academic growth"
+      }
+    },
+    {
+      "id": 16,
+      "name": "Ava King",
+      "username": "avak",
+      "email": "ava.king@email.com",
+      "address": {
+        "street": "Sunset Boulevard",
+        "suite": "Apt. 8F",
+        "city": "Charlotte",
+        "zipcode": "28202",
+        "geo": {
+          "lat": "35.2271",
+          "lng": "-80.8431"
+        }
+      },
+      "phone": "1-555-678-9012 x1616",
+      "website": "avaking.org",
+      "company": {
+        "name": "Construction & Remodeling Inc",
+        "catchPhrase": "Building your dreams",
+        "bs": "construct residential properties"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Ethan Wright",
+      "username": "ethanw",
+      "email": "ethan.wright@email.com",
+      "address": {
+        "street": "Ocean Drive",
+        "suite": "Penthouse 1",
+        "city": "Seattle",
+        "zipcode": "98101",
+        "geo": {
+          "lat": "47.6062",
+          "lng": "-122.3321"
+        }
+      },
+      "phone": "1-555-789-0123 x1717",
+      "website": "ethanwright.com",
+      "company": {
+        "name": "Mobile App Developers",
+        "catchPhrase": "Apps for a mobile world",
+        "bs": "innovate software solutions"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Chloe Baker",
+      "username": "chloeb",
+      "email": "chloe.baker@email.com",
+      "address": {
+        "street": "River Road",
+        "suite": "Unit 5",
+        "city": "Denver",
+        "zipcode": "80202",
+        "geo": {
+          "lat": "39.7392",
+          "lng": "-104.9903"
+        }
+      },
+      "phone": "1-555-890-1234 x1818",
+      "website": "chloebaker.dev",
+      "company": {
+        "name": "Food Distribution Services",
+        "catchPhrase": "Freshness delivered",
+        "bs": "streamline food supply"
+      }
+    },
+    {
+      "id": 19,
+      "name": "Noah Scott",
+      "username": "noahs",
+      "email": "noah.scott@email.com",
+      "address": {
+        "street": "Mountain View",
+        "suite": "Cabin 3",
+        "city": "Washington",
+        "zipcode": "20001",
+        "geo": {
+          "lat": "38.9072",
+          "lng": "-77.0369"
+        }
+      },
+      "phone": "1-555-901-2345 x1919",
+      "website": "noahscott.net",
+      "company": {
+        "name": "Legal & Consulting Services",
+        "catchPhrase": "Your trusted advisors",
+        "bs": "advise legal frameworks"
+      }
+    },
+    {
+      "id": 20,
+      "name": "Mia Green",
+      "username": "miag",
+      "email": "mia.green@email.com",
+      "address": {
+        "street": "Valley Road",
+        "suite": "Apt. 10B",
+        "city": "Boston",
+        "zipcode": "02108",
+        "geo": {
+          "lat": "42.3601",
+          "lng": "-71.0589"
+        }
+      },
+      "phone": "1-555-012-3456 x2020",
+      "website": "miagreen.com",
+      "company": {
+        "name": "Art & Design Studio",
+        "catchPhrase": "Creativity unleashed",
+        "bs": "ignite artistic vision"
+      }
+    },
+    {
+      "id": 21,
+      "name": "Aiden Turner",
+      "username": "aident",
+      "email": "aiden.turner@email.com",
+      "address": {
+        "street": "Pinecrest Street",
+        "suite": "Suite 22",
+        "city": "Nashville",
+        "zipcode": "37203",
+        "geo": {
+          "lat": "36.1627",
+          "lng": "-86.7816"
+        }
+      },
+      "phone": "1-555-111-2222 x2121",
+      "website": "aidenturner.io",
+      "company": {
+        "name": "Music & Entertainment Group",
+        "catchPhrase": "The sound of tomorrow",
+        "bs": "amplify creative talent"
+      }
+    },
+    {
+      "id": 22,
+      "name": "Zoe Pevensie",
+      "username": "zoep",
+      "email": "zoe.pevensie@email.com",
+      "address": {
+        "street": "North Avenue",
+        "suite": "Floor 15",
+        "city": "Las Vegas",
+        "zipcode": "89101",
+        "geo": {
+          "lat": "36.1699",
+          "lng": "-115.1398"
+        }
+      },
+      "phone": "1-555-333-4444 x2222",
+      "website": "zoepevensie.net",
+      "company": {
+        "name": "Hospitality Ventures",
+        "catchPhrase": "Experience the difference",
+        "bs": "enhance guest experiences"
+      }
+    },
+    {
+      "id": 23,
+      "name": "Caleb Foster",
+      "username": "calebf",
+      "email": "caleb.foster@email.com",
+      "address": {
+        "street": "South Road",
+        "suite": "Apt. 30",
+        "city": "Kansas City",
+        "zipcode": "64101",
+        "geo": {
+          "lat": "39.0997",
+          "lng": "-94.5786"
+        }
+      },
+      "phone": "1-555-555-6666 x2323",
+      "website": "calebfoster.com",
+      "company": {
+        "name": "Automotive Solutions LLC",
+        "catchPhrase": "Driving innovation",
+        "bs": "revolutionize transport"
+      }
+    },
+    {
+      "id": 24,
+      "name": "Lily Morris",
+      "username": "lilym",
+      "email": "lily.morris@email.com",
+      "address": {
+        "street": "East Street",
+        "suite": "Unit 8",
+        "city": "Atlanta",
+        "zipcode": "30303",
+        "geo": {
+          "lat": "33.7490",
+          "lng": "-84.3880"
+        }
+      },
+      "phone": "1-555-777-8888 x2424",
+      "website": "lilymorris.org",
+      "company": {
+        "name": "Fashion Forward Group",
+        "catchPhrase": "Style is a statement",
+        "bs": "trendset fashion"
+      }
+    },
+    {
+      "id": 25,
+      "name": "Cole Evans",
+      "username": "colee",
+      "email": "cole.evans@email.com",
+      "address": {
+        "street": "West Avenue",
+        "suite": "Apt. 12C",
+        "city": "Orlando",
+        "zipcode": "32801",
+        "geo": {
+          "lat": "28.5383",
+          "lng": "-81.3792"
+        }
+      },
+      "phone": "1-555-999-0000 x2525",
+      "website": "colee.dev",
+      "company": {
+        "name": "Gaming & Tech Solutions",
+        "catchPhrase": "Level up your experience",
+        "bs": "innovate interactive entertainment"
+      }
+    },
+    {
+      "id": 26,
+      "name": "Layla Adams",
+      "username": "laylaa",
+      "email": "layla.adams@email.com",
+      "address": {
+        "street": "Lakeview Drive",
+        "suite": "Bungalow 4",
+        "city": "Minneapolis",
+        "zipcode": "55401",
+        "geo": {
+          "lat": "44.9778",
+          "lng": "-93.2650"
+        }
+      },
+      "phone": "1-555-123-1234 x2626",
+      "website": "laylaadams.com",
+      "company": {
+        "name": "Environmental Research",
+        "catchPhrase": "Protecting our planet",
+        "bs": "sustain ecological balance"
+      }
+    },
+    {
+      "id": 27,
+      "name": "Gavin Parker",
+      "username": "gavinp",
+      "email": "gavin.parker@email.com",
+      "address": {
+        "street": "Hilltop Road",
+        "suite": "Floor 7",
+        "city": "Tampa",
+        "zipcode": "33602",
+        "geo": {
+          "lat": "27.9506",
+          "lng": "-82.4572"
+        }
+      },
+      "phone": "1-555-234-2345 x2727",
+      "website": "gavinparker.org",
+      "company": {
+        "name": "Industrial Manufacturing Inc",
+        "catchPhrase": "Precision in production",
+        "bs": "optimize manufacturing processes"
+      }
+    },
+    {
+      "id": 28,
+      "name": "Hannah Phillips",
+      "username": "hannahp",
+      "email": "hannah.phillips@email.com",
+      "address": {
+        "street": "Park Place",
+        "suite": "Apt. 9",
+        "city": "Cleveland",
+        "zipcode": "44114",
+        "geo": {
+          "lat": "41.4993",
+          "lng": "-81.6944"
+        }
+      },
+      "phone": "1-555-345-3456 x2828",
+      "website": "hannahphillips.net",
+      "company": {
+        "name": "Non-Profit Organizations",
+        "catchPhrase": "Making a difference",
+        "bs": "support community development"
+      }
+    },
+    {
+      "id": 29,
+      "name": "Isaac Mitchell",
+      "username": "isaacm",
+      "email": "isaac.mitchell@email.com",
+      "address": {
+        "street": "Main Street North",
+        "suite": "Suite 50",
+        "city": "St. Louis",
+        "zipcode": "63101",
+        "geo": {
+          "lat": "38.6270",
+          "lng": "-90.1994"
+        }
+      },
+      "phone": "1-555-456-4567 x2929",
+      "website": "isaacmitchell.com",
+      "company": {
+        "name": "Medical & Health Services",
+        "catchPhrase": "Caring for you",
+        "bs": "provide patient-centered care"
+      }
+    },
+    {
+      "id": 30,
+      "name": "Julia Reynolds",
+      "username": "juliar",
+      "email": "julia.reynolds@email.com",
+      "address": {
+        "street": "Forest Drive",
+        "suite": "Unit 1",
+        "city": "Portland",
+        "zipcode": "97204",
+        "geo": {
+          "lat": "45.5152",
+          "lng": "-122.6784"
+        }
+      },
+      "phone": "1-555-567-5678 x3030",
+      "website": "juliapdx.com",
+      "company": {
+        "name": "Urban Planning & Design",
+        "catchPhrase": "Shaping the city",
+        "bs": "design sustainable communities"
+      }
+    },
+    {
+      "id": 31,
+      "name": "Kevin Peterson",
+      "username": "kevinp",
+      "email": "kevin.peterson@email.com",
+      "address": {
+        "street": "High Street",
+        "suite": "Apt. 7B",
+        "city": "Miami",
+        "zipcode": "33130",
+        "geo": {
+          "lat": "25.7617",
+          "lng": "-80.1918"
+        }
+      },
+      "phone": "1-555-678-6789 x3131",
+      "website": "kevinpeterson.dev",
+      "company": {
+        "name": "Marine & Boating Supplies",
+        "catchPhrase": "Adventures on the water",
+        "bs": "provision maritime excursions"
+      }
+    },
+    {
+      "id": 32,
+      "name": "Maria Hernandez",
+      "username": "mariah",
+      "email": "maria.hernandez@email.com",
+      "address": {
+        "street": "First Avenue",
+        "suite": "Floor 2",
+        "city": "Detroit",
+        "zipcode": "48226",
+        "geo": {
+          "lat": "42.3314",
+          "lng": "-83.0458"
+        }
+      },
+      "phone": "1-555-789-7890 x3232",
+      "website": "mariahernandez.org",
+      "company": {
+        "name": "Financial Planning LLC",
+        "catchPhrase": "Your financial future, simplified",
+        "bs": "manage personal wealth"
+      }
+    },
+    {
+      "id": 33,
+      "name": "Nathan Hill",
+      "username": "nathanh",
+      "email": "nathan.hill@email.com",
+      "address": {
+        "street": "Second Street",
+        "suite": "Suite 10",
+        "city": "Louisville",
+        "zipcode": "40202",
+        "geo": {
+          "lat": "38.2527",
+          "lng": "-85.7585"
+        }
+      },
+      "phone": "1-555-890-8901 x3333",
+      "website": "nathanhill.net",
+      "company": {
+        "name": "Sports & Recreation Inc",
+        "catchPhrase": "Play hard, stay healthy",
+        "bs": "facilitate athletic activities"
+      }
+    },
+    {
+      "id": 34,
+      "name": "Paige Bennett",
+      "username": "paigeb",
+      "email": "paige.bennett@email.com",
+      "address": {
+        "street": "Third Avenue",
+        "suite": "Apt. 21",
+        "city": "Memphis",
+        "zipcode": "38103",
+        "geo": {
+          "lat": "35.1495",
+          "lng": "-90.0490"
+        }
+      },
+      "phone": "1-555-901-9012 x3434",
+      "website": "paigebennett.com",
+      "company": {
+        "name": "Home Improvement Services",
+        "catchPhrase": "Making your house a home",
+        "bs": "renovate residential spaces"
+      }
+    },
+    {
+      "id": 35,
+      "name": "Quinn Carter",
+      "username": "quinnc",
+      "email": "quinn.carter@email.com",
+      "address": {
+        "street": "Fourth Street",
+        "suite": "Unit 6",
+        "city": "Baltimore",
+        "zipcode": "21201",
+        "geo": {
+          "lat": "39.2904",
+          "lng": "-76.6122"
+        }
+      },
+      "phone": "1-555-012-0123 x3535",
+      "website": "quinncarter.io",
+      "company": {
+        "name": "Pet Care & Grooming",
+        "catchPhrase": "Treating your pets like family",
+        "bs": "care for domesticated animals"
+      }
+    },
+    {
+      "id": 36,
+      "name": "Riley Morgan",
+      "username": "rileym",
+      "email": "riley.morgan@email.com",
+      "address": {
+        "street": "Fifth Avenue",
+        "suite": "Apt. 30A",
+        "city": "Milwaukee",
+        "zipcode": "53202",
+        "geo": {
+          "lat": "43.0389",
+          "lng": "-87.9065"
+        }
+      },
+      "phone": "1-555-123-1234 x3636",
+      "website": "rileymorgan.dev",
+      "company": {
+        "name": "Financial Services Group",
+        "catchPhrase": "Securing your future",
+        "bs": "invest financial assets"
+      }
+    },
+    {
+      "id": 37,
+      "name": "Samantha Baker",
+      "username": "samanthab",
+      "email": "samantha.baker@email.com",
+      "address": {
+        "street": "Sixth Street",
+        "suite": "Suite 11",
+        "city": "Albuquerque",
+        "zipcode": "87102",
+        "geo": {
+          "lat": "35.0844",
+          "lng": "-106.6504"
+        }
+      },
+      "phone": "1-555-234-2345 x3737",
+      "website": "samanthabaker.com",
+      "company": {
+        "name": "Art Gallery & Exhibitions",
+        "catchPhrase": "Where art comes to life",
+        "bs": "showcase artistic expression"
+      }
+    },
+    {
+      "id": 38,
+      "name": "Thomas Reed",
+      "username": "thomasr",
+      "email": "thomas.reed@email.com",
+      "address": {
+        "street": "Seventh Street",
+        "suite": "Floor 20",
+        "city": "Tucson",
+        "zipcode": "85701",
+        "geo": {
+          "lat": "32.2226",
+          "lng": "-110.9747"
+        }
+      },
+      "phone": "1-555-345-3456 x3838",
+      "website": "thomasreed.org",
+      "company": {
+        "name": "Outdoor Adventure Co.",
+        "catchPhrase": "Unleash your inner explorer",
+        "bs": "facilitate recreational excursions"
+      }
+    },
+    {
+      "id": 39,
+      "name": "Victoria Scott",
+      "username": "victorias",
+      "email": "victoria.scott@email.com",
+      "address": {
+        "street": "Eighth Avenue",
+        "suite": "Unit 4",
+        "city": "Fresno",
+        "zipcode": "93721",
+        "geo": {
+          "lat": "36.7478",
+          "lng": "-119.7716"
+        }
+      },
+      "phone": "1-555-456-4567 x3939",
+      "website": "victoriascott.net",
+      "company": {
+        "name": "Photography & Videography",
+        "catchPhrase": "Capturing life's moments",
+        "bs": "preserve visual memories"
+      }
+    },
+    {
+      "id": 40,
+      "name": "William Evans",
+      "username": "williame",
+      "email": "william.evans@email.com",
+      "address": {
+        "street": "Ninth Street",
+        "suite": "Apt. 16B",
+        "city": "Sacramento",
+        "zipcode": "95814",
+        "geo": {
+          "lat": "38.5816",
+          "lng": "-121.4944"
+        }
+      },
+      "phone": "1-555-567-5678 x4040",
+      "website": "williamevans.com",
+      "company": {
+        "name": "Agriculture & Farming",
+        "catchPhrase": "Harvesting the future",
+        "bs": "cultivate sustainable produce"
+      }
+    },
+    {
+      "id": 41,
+      "name": "Yasmine Kim",
+      "username": "yasminek",
+      "email": "yasmine.kim@email.com",
+      "address": {
+        "street": "Tenth Avenue",
+        "suite": "Suite 300",
+        "city": "Mesa",
+        "zipcode": "85201",
+        "geo": {
+          "lat": "33.4148",
+          "lng": "-111.8315"
+        }
+      },
+      "phone": "1-555-678-6789 x4141",
+      "website": "yasminekim.dev",
+      "company": {
+        "name": "Automotive Dealership",
+        "catchPhrase": "Your journey starts here",
+        "bs": "facilitate vehicle sales"
+      }
+    },
+    {
+      "id": 42,
+      "name": "Zachary Allen",
+      "username": "zacharya",
+      "email": "zachary.allen@email.com",
+      "address": {
+        "street": "Eleventh Street",
+        "suite": "Apt. 5D",
+        "city": "Virginia Beach",
+        "zipcode": "23451",
+        "geo": {
+          "lat": "36.8529",
+          "lng": "-75.9780"
+        }
+      },
+      "phone": "1-555-789-7890 x4242",
+      "website": "zacharyallen.org",
+      "company": {
+        "name": "Telecommunications Inc",
+        "catchPhrase": "Connecting the world",
+        "bs": "innovate communication networks"
+      }
+    },
+    {
+      "id": 43,
+      "name": "Allison Cooper",
+      "username": "allisonc",
+      "email": "allison.cooper@email.com",
+      "address": {
+        "street": "Twelfth Avenue",
+        "suite": "Floor 12",
+        "city": "Omaha",
+        "zipcode": "68102",
+        "geo": {
+          "lat": "41.2565",
+          "lng": "-95.9345"
+        }
+      },
+      "phone": "1-555-890-8901 x4343",
+      "website": "allisoncooper.net",
+      "company": {
+        "name": "Manufacturing & Robotics",
+        "catchPhrase": "Building the future, today",
+        "bs": "automate production lines"
+      }
+    },
+    {
+      "id": 44,
+      "name": "Bryan Foster",
+      "username": "bryanf",
+      "email": "bryan.foster@email.com",
+      "address": {
+        "street": "Thirteenth Street",
+        "suite": "Unit 1",
+        "city": "Raleigh",
+        "zipcode": "27601",
+        "geo": {
+          "lat": "35.7796",
+          "lng": "-78.6382"
+        }
+      },
+      "phone": "1-555-901-9012 x4444",
+      "website": "bryanfoster.com",
+      "company": {
+        "name": "Energy Solutions Group",
+        "catchPhrase": "Powering a sustainable world",
+        "bs": "implement renewable technologies"
+      }
+    },
+    {
+      "id": 45,
+      "name": "Catherine Hill",
+      "username": "catherineh",
+      "email": "catherine.hill@email.com",
+      "address": {
+        "street": "Fourteenth Avenue",
+        "suite": "Apt. 19A",
+        "city": "Colorado Springs",
+        "zipcode": "80903",
+        "geo": {
+          "lat": "38.8339",
+          "lng": "-104.8214"
+        }
+      },
+      "phone": "1-555-012-0123 x4545",
+      "website": "catherinehill.io",
+      "company": {
+        "name": "Aerospace & Defense",
+        "catchPhrase": "Exploring new frontiers",
+        "bs": "engineer advanced systems"
+      }
+    },
+    {
+      "id": 46,
+      "name": "Dylan Lopez",
+      "username": "dylanl",
+      "email": "dylan.lopez@email.com",
+      "address": {
+        "street": "Fifteenth Street",
+        "suite": "Suite 5",
+        "city": "Wichita",
+        "zipcode": "67202",
+        "geo": {
+          "lat": "37.6872",
+          "lng": "-97.3301"
+        }
+      },
+      "phone": "1-555-123-1234 x4646",
+      "website": "dylanlopez.dev",
+      "company": {
+        "name": "E-commerce & Retail",
+        "catchPhrase": "Shopping made simple",
+        "bs": "streamline online sales"
+      }
+    },
+    {
+      "id": 47,
+      "name": "Ella Reed",
+      "username": "ellar",
+      "email": "ella.reed@email.com",
+      "address": {
+        "street": "Sixteenth Avenue",
+        "suite": "Apt. 2B",
+        "city": "New Orleans",
+        "zipcode": "70112",
+        "geo": {
+          "lat": "29.9511",
+          "lng": "-90.0715"
+        }
+      },
+      "phone": "1-555-234-2345 x4747",
+      "website": "ellareed.com",
+      "company": {
+        "name": "Hospitality & Tourism",
+        "catchPhrase": "Your getaway awaits",
+        "bs": "curate travel experiences"
+      }
+    },
+    {
+      "id": 48,
+      "name": "Frank White",
+      "username": "frankw",
+      "email": "frank.white@email.com",
+      "address": {
+        "street": "Seventeenth Street",
+        "suite": "Unit 9",
+        "city": "Honolulu",
+        "zipcode": "96813",
+        "geo": {
+          "lat": "21.3069",
+          "lng": "-157.8583"
+        }
+      },
+      "phone": "1-555-345-3456 x4848",
+      "website": "frankwhite.org",
+      "company": {
+        "name": "Food & Beverage Distributors",
+        "catchPhrase": "Quality you can taste",
+        "bs": "deliver fresh products"
+      }
+    },
+    {
+      "id": 49,
+      "name": "Grace Hall",
+      "username": "graceh",
+      "email": "grace.hall@email.com",
+      "address": {
+        "street": "Eighteenth Avenue",
+        "suite": "Floor 5",
+        "city": "Anchorage",
+        "zipcode": "99501",
+        "geo": {
+          "lat": "61.2181",
+          "lng": "-149.9003"
+        }
+      },
+      "phone": "1-555-456-4567 x4949",
+      "website": "gracehall.net",
+      "company": {
+        "name": "Outdoor Equipment Inc",
+        "catchPhrase": "Gear up for adventure",
+        "bs": "supply outdoor gear"
+      }
+    },
+    {
+      "id": 50,
+      "name": "Henry Adams",
+      "username": "henrya",
+      "email": "henry.adams@email.com",
+      "address": {
+        "street": "Nineteenth Street",
+        "suite": "Apt. 12",
+        "city": "Fargo",
+        "zipcode": "58102",
+        "geo": {
+          "lat": "46.8771",
+          "lng": "-96.7898"
+        }
+      },
+      "phone": "1-555-567-5678 x5050",
+      "website": "henryadams.com",
+      "company": {
+        "name": "Real Estate Management",
+        "catchPhrase": "Your property, our priority",
+        "bs": "manage commercial assets"
+      }
+    }
+  ]
+  

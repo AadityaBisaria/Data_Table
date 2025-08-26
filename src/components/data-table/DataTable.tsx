@@ -31,7 +31,9 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
     updateFilter,
     clearFilters,
     setCurrentPage,
-    updateItemsPerPage
+    updateItemsPerPage,
+    selectAllColumns,
+    deselectAllColumns
   } = useDataTable(apiUrl);
 
   if (loading) {
@@ -109,7 +111,22 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
       .slice(0, 2);
   };
 
-  const formatCellValue = (value: any, columnKey: string, rowData: any) => {
+  // Helper function to get nested value using dot notation
+  const getNestedValue = (obj: any, path: string) => {
+    return path.split('.').reduce((current, key) => {
+      return current && current[key] !== undefined ? current[key] : undefined;
+    }, obj);
+  };
+
+  const formatCellValue = (columnKey: string, rowData: any) => {
+    // Get value using dot notation for nested properties
+    const value = getNestedValue(rowData, columnKey);
+    
+    // Debug logging for company columns
+    if (columnKey.startsWith('company.')) {
+      console.log(`Column: ${columnKey}, Raw Data:`, rowData, 'Extracted Value:', value);
+    }
+    
     if (value === null || value === undefined) return '-';
     
     // Check if this is an image field
@@ -142,6 +159,8 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
         filteredItems={filteredItemsCount}
         itemsPerPage={itemsPerPage}
         onItemsPerPageChange={updateItemsPerPage}
+        onSelectAllColumns={selectAllColumns}
+        onDeselectAllColumns={deselectAllColumns}
       />
 
       <div className="overflow-auto">
@@ -184,7 +203,7 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
                 <TableRow key={index} className="hover:bg-muted/50">
                   {visibleColumns.map((column) => (
                     <TableCell key={column.key} className="whitespace-nowrap">
-                      {formatCellValue(row[column.key], column.key, row)}
+                      {formatCellValue(column.key, row)}
                     </TableCell>
                   ))}
                 </TableRow>
