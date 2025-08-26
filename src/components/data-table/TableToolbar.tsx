@@ -152,10 +152,6 @@ export function TableToolbar({
         </div>
       )}
 
-      {/* Results info */}
-      <div className="text-sm text-muted-foreground">
-        Showing {filteredItems} of {totalItems} results
-      </div>
     </div>
   );
 }
