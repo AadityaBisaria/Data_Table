@@ -6,7 +6,7 @@ from pathlib import Path
 from ..models import (
     User, FlexibleDataResponse, ColumnSelection, DataRequest
 )
-from ..utils import select_columns, get_available_columns
+from ..utils import select_columns, get_available_columns, flatten_user_data
 
 router = APIRouter(prefix="/api/data", tags=["data"])
 
@@ -35,6 +35,7 @@ async def get_flexible_data(
     page: Optional[int] = Query(None, ge=1, description="Page number (1-based)"),
     limit: Optional[int] = Query(None, ge=1, le=100, description="Items per page"),
     search: Optional[str] = Query(None, description="Search term to filter across all fields"),
+    filters: Optional[str] = Query(None, description="Comma-separated column filters in the form key:value (e.g., 'id:5,company.name:tech')"),
     sort_by: Optional[str] = Query(None, description="Field to sort by (e.g., 'name', 'city', 'company.name')"),
     sort_order: Optional[str] = Query("asc", pattern="^(asc|desc)$", description="Sort order: 'asc' or 'desc'"),
     format: Optional[str] = Query("nested", pattern="^(nested|flat)$", description="Response format: 'nested' (preserves structure) or 'flat' (flattened)")
@@ -54,7 +55,7 @@ async def get_flexible_data(
     
     filtered_data = users_data.copy()
     
-    # Apply search filter
+    # Apply search filter (include id)
     if search:
         search_lower = search.lower()
         filtered_data = [
@@ -62,6 +63,7 @@ async def get_flexible_data(
             if any(
                 search_lower in str(value).lower()
                 for value in [
+                    str(user.get('id', '')),
                     user.get('name', ''),
                     user.get('username', ''),
                     user.get('email', ''),
@@ -74,6 +76,54 @@ async def get_flexible_data(
                 ]
             )
         ]
+
+    # Apply column-specific filters (exact for id, substring for others)
+    if filters:
+        def get_nested_value(obj: Dict[str, Any], path: str):
+            try:
+                current = obj
+                for part in path.split('.'):
+                    if isinstance(current, dict) and part in current:
+                        current = current[part]
+                    else:
+                        return None
+                return current
+            except Exception:
+                return None
+
+        filter_pairs = [pair.strip() for pair in filters.split(',') if pair.strip()]
+        parsed_filters: Dict[str, str] = {}
+        for pair in filter_pairs:
+            if ':' in pair:
+                key, val = pair.split(':', 1)
+                parsed_filters[key.strip()] = val.strip()
+
+        if parsed_filters:
+            new_filtered = []
+            for user in filtered_data:
+                flat = flatten_user_data(user)
+                ok = True
+                for key, val in parsed_filters.items():
+                    if key == 'id':
+                        try:
+                            if int(user.get('id', -1)) != int(val):
+                                ok = False
+                                break
+                        except ValueError:
+                            ok = False
+                            break
+                    else:
+                        target = None
+                        if '.' in key:
+                            target = get_nested_value(user, key)
+                        else:
+                            target = flat.get(key)
+                        if target is None or str(val).lower() not in str(target).lower():
+                            ok = False
+                            break
+                if ok:
+                    new_filtered.append(user)
+            filtered_data = new_filtered
     
     # Apply sorting
     if sort_by:

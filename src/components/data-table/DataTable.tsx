@@ -31,7 +31,9 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
     updateFilter,
     clearFilters,
     setCurrentPage,
-    updateItemsPerPage
+    updateItemsPerPage,
+    selectAllColumns,
+    deselectAllColumns
   } = useDataTable(apiUrl);
 
   if (loading) {
@@ -157,6 +159,8 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
         filteredItems={filteredItemsCount}
         itemsPerPage={itemsPerPage}
         onItemsPerPageChange={updateItemsPerPage}
+        onSelectAllColumns={selectAllColumns}
+        onDeselectAllColumns={deselectAllColumns}
       />
 
       <div className="overflow-auto">

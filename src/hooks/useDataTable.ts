@@ -16,6 +16,9 @@ export interface TableColumn {
   label: string;
   visible: boolean;
   sortable: boolean;
+  // When using FastAPI with format='flat', key may be flat (e.g., company_name)
+  // while requestKey is the nested API selector (e.g., company.name)
+  requestKey?: string;
   description?: string;
 }
 
@@ -71,12 +74,29 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
           const allColumnKeys = Object.keys(columnsInfo);
           setSelectedColumns(allColumnKeys); // Select all columns by default
           
+          // Map nested keys to flat keys for rendering when using flat format
+          const nestedToFlat = (k: string): string => {
+            switch (k) {
+              case 'address.street': return 'street';
+              case 'address.suite': return 'suite';
+              case 'address.city': return 'city';
+              case 'address.zipcode': return 'zipcode';
+              case 'address.geo.lat': return 'lat';
+              case 'address.geo.lng': return 'lng';
+              case 'company.name': return 'company_name';
+              case 'company.catchPhrase': return 'company_catchphrase';
+              case 'company.bs': return 'company_bs';
+              default: return k;
+            }
+          };
+
           // Create column configuration with all columns visible by default
-          const generatedColumns: TableColumn[] = allColumnKeys.map(key => ({
-            key,
-            label: formatColumnLabel(key),
-            description: columnsInfo[key],
-            visible: true, // All columns visible by default
+          const generatedColumns: TableColumn[] = allColumnKeys.map(nestedKey => ({
+            key: nestedToFlat(nestedKey),
+            requestKey: nestedKey,
+            label: formatColumnLabel(nestedKey),
+            description: columnsInfo[nestedKey],
+            visible: true,
             sortable: true
           }));
           setColumns(generatedColumns);
@@ -105,8 +125,23 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
             search: filters.searchTerm || undefined,
             sortBy: sortConfig.length > 0 ? sortConfig[0].key : undefined,
             sortOrder: sortConfig.length > 0 ? sortConfig[0].direction : undefined,
-            format: 'nested'
+            format: 'flat'
           };
+
+          // Map column filters to backend filters (use nested requestKey when available)
+          const filterEntries = Object.entries(filters.columnFilters).filter(([, v]) => v && v.trim() !== '');
+          if (filterEntries.length > 0) {
+            const keyMap: Record<string, string> = {};
+            for (const col of columns) {
+              keyMap[col.key] = col.requestKey ?? col.key;
+            }
+            const apiFilters: Record<string, string> = {};
+            for (const [k, v] of filterEntries) {
+              const apiKey = keyMap[k] || k;
+              apiFilters[apiKey] = v;
+            }
+            options.filters = apiFilters;
+          }
           
           const result = await fetchFlexibleData(options);
           setData(result.data);
@@ -137,7 +172,7 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
     if (columns.length > 0 || !isUsingFastAPI) {
       loadData();
     }
-  }, [apiUrl, selectedColumns, currentPage, itemsPerPage, filters.searchTerm, sortConfig, isUsingFastAPI, columns.length]);
+  }, [apiUrl, selectedColumns, currentPage, itemsPerPage, filters.searchTerm, filters.columnFilters, sortConfig, isUsingFastAPI, columns.length]);
 
   // For FastAPI, data processing is handled server-side
   // For legacy APIs, we still need client-side processing
@@ -159,7 +194,7 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
       );
     }
 
-    // Apply column-specific filters
+    // Apply column-specific filters (client-side for legacy only)
     Object.entries(filters.columnFilters).forEach(([columnKey, filterValue]) => {
       if (filterValue) {
         filtered = filtered.filter(item =>
@@ -222,11 +257,11 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
     
     // For FastAPI, update selected columns based on visibility
     if (isUsingFastAPI) {
-      const visibleColumns = columns
+      const visibleNestedKeys = columns
         .map(col => col.key === columnKey ? { ...col, visible: !col.visible } : col)
         .filter(col => col.visible)
-        .map(col => col.key);
-      setSelectedColumns(visibleColumns);
+        .map(col => col.requestKey ?? col.key);
+      setSelectedColumns(visibleNestedKeys);
     }
   };
 
@@ -238,7 +273,7 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
       setColumns(cols =>
         cols.map(col => ({
           ...col,
-          visible: columnKeys.includes(col.key)
+          visible: columnKeys.includes(col.requestKey ?? col.key)
         }))
       );
     }
@@ -246,13 +281,15 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
 
   // Function to select all columns
   const selectAllColumns = () => {
-    const allColumnKeys = columns.map(col => col.key);
+    const allColumnKeys = columns.map(col => col.requestKey ?? col.key);
     updateSelectedColumns(allColumnKeys);
   };
 
   // Function to deselect all columns
   const deselectAllColumns = () => {
     updateSelectedColumns([]);
+    // Also update local visibility state
+    setColumns(cols => cols.map(col => ({ ...col, visible: false })));
   };
 
   const handleSort = (columnKey: string, multiSort = false) => {

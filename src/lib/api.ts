@@ -51,6 +51,7 @@ export interface FetchDataOptions {
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
   format?: 'nested' | 'flat';
+  filters?: Record<string, string>;
 }
 
 /**
@@ -98,6 +99,17 @@ export async function fetchFlexibleData(options: FetchDataOptions = {}): Promise
     if (options.sortBy) params.append('sort_by', options.sortBy);
     if (options.sortOrder) params.append('sort_order', options.sortOrder);
     if (options.format) params.append('format', options.format);
+    if (options.filters && Object.keys(options.filters).length > 0) {
+      const pairs: string[] = [];
+      for (const [k, v] of Object.entries(options.filters)) {
+        if (v !== undefined && v !== null && String(v).trim() !== '') {
+          pairs.push(`${k}:${String(v).trim()}`);
+        }
+      }
+      if (pairs.length > 0) {
+        params.append('filters', pairs.join(','));
+      }
+    }
 
     const url = `${FASTAPI_ENDPOINTS.data}?${params.toString()}`;
     const response = await fetch(url);

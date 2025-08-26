@@ -2,12 +2,11 @@ import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { DataTable } from "@/components/data-table/DataTable";
-import { ApiConfig } from "@/components/ApiConfig";
 import { DEFAULT_API_URL } from "@/lib/api";
 
 const Index = () => {
   console.log("Index component loading...");
-  const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL);
+  const [apiUrl] = useState(DEFAULT_API_URL);
   console.log("Index component rendered with apiUrl:", apiUrl);
 
   return (
@@ -23,7 +22,7 @@ const Index = () => {
                 Explore and analyze data with advanced filtering, sorting, and pagination capabilities.
               </p>
             </div>
-            <ApiConfig currentUrl={apiUrl} onUrlChange={setApiUrl} />
+            {/* API Config removed */}
           </div>
           
           <DataTable apiUrl={apiUrl} />
