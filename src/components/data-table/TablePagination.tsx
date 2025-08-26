@@ -73,8 +73,14 @@ export function TablePagination({
 
   const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
-    if (value > 0 && value <= totalItems) {
+    if (!isNaN(value) && value > 0 && value <= totalItems) {
       onItemsPerPageChange(value);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.currentTarget.blur();
     }
   };
 
@@ -89,7 +95,8 @@ export function TablePagination({
           max={totalItems}
           value={itemsPerPage}
           onChange={handleItemsPerPageChange}
-          className="w-16 h-7 text-center text-sm"
+          onKeyDown={handleKeyDown}
+          className="w-16 h-7 text-center text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
         <span>of {totalItems} results</span>
       </div>
