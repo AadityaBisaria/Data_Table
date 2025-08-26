@@ -59,8 +59,9 @@ export function ApiConfig({ currentUrl, onUrlChange }: ApiConfigProps) {
                 <SelectValue placeholder="Select a preset" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="fastapi">FastAPI Backend (Recommended)</SelectItem>
+                <SelectItem value="local">Local FastAPI</SelectItem>
                 <SelectItem value="demo">Demo API (JSONPlaceholder)</SelectItem>
-                <SelectItem value="fastapi">FastAPI Backend</SelectItem>
                 <SelectItem value="custom">Custom URL</SelectItem>
               </SelectContent>
             </Select>
@@ -86,8 +87,9 @@ export function ApiConfig({ currentUrl, onUrlChange }: ApiConfigProps) {
           </div>
 
           <div className="text-xs text-muted-foreground space-y-1">
-            <p><strong>Demo:</strong> Uses JSONPlaceholder for demonstration</p>
-            <p><strong>FastAPI:</strong> Connect to your custom FastAPI backend</p>
+            <p><strong>FastAPI Backend:</strong> Full-featured API with column selection (http://localhost:8000)</p>
+            <p><strong>Local FastAPI:</strong> Same as above, for local development</p>
+            <p><strong>Demo:</strong> Uses JSONPlaceholder for demonstration (limited features)</p>
             <p><strong>Custom:</strong> Use any REST API that returns JSON arrays</p>
           </div>
         </div>

@@ -1,0 +1,226 @@
+from fastapi import APIRouter, HTTPException, Query, Depends
+from typing import List, Optional, Dict, Any
+import json
+from pathlib import Path
+
+from ..models import (
+    User, FlexibleDataResponse, ColumnSelection, DataRequest
+)
+from ..utils import select_columns, get_available_columns
+
+router = APIRouter(prefix="/api/data", tags=["data"])
+
+# Load data from JSON file
+def load_data() -> List[Dict[str, Any]]:
+    """Load data from the JSON file"""
+    try:
+        # Get the path to the data.json file
+        current_dir = Path(__file__).parent.parent.parent
+        data_file = current_dir / "dummy_db" / "data.json"
+        
+        with open(data_file, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        return data
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Data file not found")
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Invalid JSON data")
+
+# In-memory cache (loads once at startup)
+users_data = load_data()
+
+@router.get("/", response_model=FlexibleDataResponse)
+async def get_flexible_data(
+    columns: Optional[str] = Query(None, description="Comma-separated list of columns (e.g., 'id,name,email' or 'id,name,address.city')"),
+    page: Optional[int] = Query(None, ge=1, description="Page number (1-based)"),
+    limit: Optional[int] = Query(None, ge=1, le=100, description="Items per page"),
+    search: Optional[str] = Query(None, description="Search term to filter across all fields"),
+    sort_by: Optional[str] = Query(None, description="Field to sort by (e.g., 'name', 'city', 'company.name')"),
+    sort_order: Optional[str] = Query("asc", pattern="^(asc|desc)$", description="Sort order: 'asc' or 'desc'"),
+    format: Optional[str] = Query("nested", pattern="^(nested|flat)$", description="Response format: 'nested' (preserves structure) or 'flat' (flattened)")
+) -> FlexibleDataResponse:
+    """
+    Get user data with flexible column selection and filtering
+    
+    **Examples:**
+    - All data: `/api/data/`
+    - Basic info: `/api/data/?columns=id,name,email`
+    - Address only: `/api/data/?columns=id,name,address.street,address.city`
+    - Company info: `/api/data/?columns=id,name,company.name,company.catchPhrase`
+    - Flat format: `/api/data/?columns=id,name,city,company_name&format=flat`
+    - Search: `/api/data/?search=john&columns=id,name,email`
+    - Paginated: `/api/data/?columns=id,name,email&page=1&limit=10`
+    """
+    
+    filtered_data = users_data.copy()
+    
+    # Apply search filter
+    if search:
+        search_lower = search.lower()
+        filtered_data = [
+            user for user in filtered_data
+            if any(
+                search_lower in str(value).lower()
+                for value in [
+                    user.get('name', ''),
+                    user.get('username', ''),
+                    user.get('email', ''),
+                    user.get('phone', ''),
+                    user.get('website', ''),
+                    user.get('address', {}).get('city', ''),
+                    user.get('address', {}).get('street', ''),
+                    user.get('company', {}).get('name', ''),
+                    user.get('company', {}).get('catchPhrase', '')
+                ]
+            )
+        ]
+    
+    # Apply sorting
+    if sort_by:
+        try:
+            reverse = sort_order == "desc"
+            
+            # Direct field sorting
+            if sort_by in ['id', 'name', 'username', 'email', 'phone', 'website']:
+                if sort_by == 'id':
+                    filtered_data.sort(key=lambda x: x.get('id', 0), reverse=reverse)
+                else:
+                    filtered_data.sort(key=lambda x: str(x.get(sort_by, '')).lower(), reverse=reverse)
+            
+            # Nested field sorting
+            elif sort_by == 'city' or sort_by == 'address.city':
+                filtered_data.sort(key=lambda x: str(x.get('address', {}).get('city', '')).lower(), reverse=reverse)
+            elif sort_by == 'street' or sort_by == 'address.street':
+                filtered_data.sort(key=lambda x: str(x.get('address', {}).get('street', '')).lower(), reverse=reverse)
+            elif sort_by == 'company' or sort_by == 'company.name':
+                filtered_data.sort(key=lambda x: str(x.get('company', {}).get('name', '')).lower(), reverse=reverse)
+            elif sort_by == 'company.catchPhrase':
+                filtered_data.sort(key=lambda x: str(x.get('company', {}).get('catchPhrase', '')).lower(), reverse=reverse)
+                
+        except Exception as e:
+            # If sorting fails, continue without sorting
+            print(f"Sorting error: {e}")
+    
+    total_count = len(filtered_data)
+    
+    # Parse columns
+    selected_columns = None
+    if columns:
+        selected_columns = [col.strip() for col in columns.split(',')]
+    
+    # Apply column selection
+    selected_data = select_columns(filtered_data, selected_columns, format)
+    
+    # Apply pagination
+    pagination_info = None
+    if page is not None and limit is not None:
+        start_index = (page - 1) * limit
+        end_index = start_index + limit
+        paginated_data = selected_data[start_index:end_index]
+        
+        pagination_info = {
+            "page": page,
+            "limit": limit,
+            "total": total_count,
+            "pages": (total_count + limit - 1) // limit,
+            "has_next": end_index < total_count,
+            "has_prev": page > 1
+        }
+        
+        selected_data = paginated_data
+    
+    # Determine which columns are included
+    if selected_columns:
+        included_columns = selected_columns
+    else:
+        # All columns included
+        if format == "flat":
+            included_columns = list(get_available_columns().keys())
+        else:
+            included_columns = ["id", "name", "username", "email", "address", "phone", "website", "company"]
+    
+    return FlexibleDataResponse(
+        data=selected_data,
+        columns=included_columns,
+        total=total_count,
+        pagination=pagination_info,
+        format=format
+    )
+
+@router.post("/", response_model=FlexibleDataResponse)
+async def get_flexible_data_post(request: DataRequest) -> FlexibleDataResponse:
+    """
+    POST version for complex column selection (useful when URL gets too long)
+    
+    **Request Body Example:**
+    ```json
+    {
+        "columns": ["id", "name", "email", "address.city"],
+        "page": 1,
+        "limit": 10,
+        "search": "john",
+        "sort_by": "name",
+        "sort_order": "asc",
+        "format": "nested"
+    }
+    ```
+    """
+    
+    # Convert enum to strings if provided
+    columns_str = None
+    if request.columns:
+        columns_str = ",".join([col.value for col in request.columns])
+    
+    # Use the same logic as GET endpoint
+    return await get_flexible_data(
+        columns=columns_str,
+        page=request.page,
+        limit=request.limit,
+        search=request.search,
+        sort_by=request.sort_by,
+        sort_order=request.sort_order,
+        format=request.format
+    )
+
+@router.get("/{user_id}", response_model=User)
+async def get_user_by_id(user_id: int) -> User:
+    """Get a specific user by ID"""
+    user = next((user for user in users_data if user["id"] == user_id), None)
+    if not user:
+        raise HTTPException(status_code=404, detail=f"User with ID {user_id} not found")
+    
+    # Validate the user data against the User model
+    try:
+        return User(**user)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Invalid user data: {str(e)}")
+
+@router.get("/search/")
+async def search_users(
+    q: str = Query(..., description="Search query"),
+    columns: Optional[str] = Query(None, description="Comma-separated list of columns to return"),
+    format: Optional[str] = Query("nested", pattern="^(nested|flat)$", description="Response format")
+) -> FlexibleDataResponse:
+    """
+    Search users by name, email, username, etc. with column selection
+    
+    **Examples:**
+    - Basic search: `/api/data/search/?q=john`
+    - Search with columns: `/api/data/search/?q=tech&columns=id,name,company.name`
+    """
+    
+    if not q:
+        return FlexibleDataResponse(
+            data=[],
+            columns=[],
+            total=0,
+            pagination=None,
+            format=format
+        )
+    
+    # Use the main get_flexible_data function with search parameter
+    return await get_flexible_data(
+        columns=columns,
+        search=q,
+        format=format
+    )

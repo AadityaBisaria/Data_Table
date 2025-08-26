@@ -113,13 +113,17 @@ export function TableToolbar({
               Columns ({visibleColumns.length}/{columns.length})
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-64" align="end">
+          <PopoverContent className="w-64" align="end" onInteractOutside={(e) => e.preventDefault()}>
             <div className="space-y-4">
               <div className="font-medium">Toggle Columns</div>
               <Separator />
               <div className="space-y-2">
                 {columns.map((column) => (
-                  <div key={column.key} className="flex items-center space-x-2">
+                  <div 
+                    key={column.key} 
+                    className="flex items-center space-x-2"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Checkbox
                       id={column.key}
                       checked={column.visible}
@@ -128,6 +132,11 @@ export function TableToolbar({
                     <label
                       htmlFor={column.key}
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onToggleColumn(column.key);
+                      }}
                     >
                       {column.label}
                     </label>
