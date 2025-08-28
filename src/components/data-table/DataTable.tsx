@@ -119,13 +119,8 @@ export function DataTable({ apiUrl, className }: DataTableProps) {
   };
 
   const formatCellValue = (columnKey: string, rowData: any) => {
-    // Get value using dot notation for nested properties
-    const value = getNestedValue(rowData, columnKey);
-    
-    // Debug logging for company columns
-    if (columnKey.startsWith('company.')) {
-      console.log(`Column: ${columnKey}, Raw Data:`, rowData, 'Extracted Value:', value);
-    }
+    // For flat data format, use the key directly; for nested, use dot notation
+    const value = rowData[columnKey] !== undefined ? rowData[columnKey] : getNestedValue(rowData, columnKey);
     
     if (value === null || value === undefined) return '-';
     
