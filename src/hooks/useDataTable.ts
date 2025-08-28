@@ -99,6 +99,9 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
             visible: true,
             sortable: true
           }));
+          console.log("Generated columns:", generatedColumns);
+          console.log("Company columns found:", generatedColumns.filter(c => c.key.includes('company')));
+          console.log("Address columns found:", generatedColumns.filter(c => c.key.includes('street') || c.key.includes('city')));
           setColumns(generatedColumns);
         }
       } catch (err) {
@@ -144,6 +147,8 @@ export function useDataTable(apiUrl: string = DEFAULT_API_URL) {
           }
           
           const result = await fetchFlexibleData(options);
+          console.log("Received data:", result.data.slice(0, 2)); 
+          console.log("Data keys in first item:", Object.keys(result.data[0] || {}));
           setData(result.data);
           setTotalItems(result.total);
         } else {
